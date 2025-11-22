@@ -9,7 +9,7 @@
 
 ### 介面截圖
 
-````carousel
+
 ![首頁 - 簡潔優雅的歡迎畫面](public/screenshots/home.png)
 <!-- slide -->
 ![推薦結果 - 精美的餐廳卡片設計](public/screenshots/result.png)
@@ -17,7 +17,7 @@
 ![收藏清單 - 管理你喜愛的餐廳](public/screenshots/favorites.png)
 <!-- slide -->
 ![歷史紀錄 - 追蹤你的午餐選擇](public/screenshots/history.png)
-````
+
 
 ---
 
