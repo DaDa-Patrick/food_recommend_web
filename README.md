@@ -5,18 +5,18 @@
 ## 📱 專案展示
 
 ### 完整操作流程
-![操作演示](/.gemini/antigravity/brain/a5ad4498-c58f-451f-b25c-822fc71f7ef4/lunch_picker_demo_1763727245567.webp)
+![操作演示](public/screenshots/demo.webp)
 
 ### 介面截圖
 
 ````carousel
-![首頁 - 簡潔優雅的歡迎畫面](/.gemini/antigravity/brain/a5ad4498-c58f-451f-b25c-822fc71f7ef4/home_page_1763727261139.png)
+![首頁 - 簡潔優雅的歡迎畫面](public/screenshots/home.png)
 <!-- slide -->
-![推薦結果 - 精美的餐廳卡片設計](/.gemini/antigravity/brain/a5ad4498-c58f-451f-b25c-822fc71f7ef4/result_page_1_1763727292104.png)
+![推薦結果 - 精美的餐廳卡片設計](public/screenshots/result.png)
 <!-- slide -->
-![收藏清單 - 管理你喜愛的餐廳](/.gemini/antigravity/brain/a5ad4498-c58f-451f-b25c-822fc71f7ef4/favorites_page_1763727317140.png)
+![收藏清單 - 管理你喜愛的餐廳](public/screenshots/favorites.png)
 <!-- slide -->
-![歷史紀錄 - 追蹤你的午餐選擇](/.gemini/antigravity/brain/a5ad4498-c58f-451f-b25c-822fc71f7ef4/history_page_1763727329654.png)
+![歷史紀錄 - 追蹤你的午餐選擇](public/screenshots/history.png)
 ````
 
 ---
