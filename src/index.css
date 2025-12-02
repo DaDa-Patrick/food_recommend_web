@@ -1,35 +1,49 @@
 :root {
   /* Premium Color Palette */
-  --color-primary: #6366f1; /* Indigo 500 */
-  --color-primary-dark: #4f46e5; /* Indigo 600 */
-  --color-primary-light: #818cf8; /* Indigo 400 */
-  --color-secondary: #ec4899; /* Pink 500 */
-  --color-secondary-light: #f472b6; /* Pink 400 */
-  --color-accent: #8b5cf6; /* Violet 500 */
-  --color-accent-light: #a78bfa; /* Violet 400 */
-  --color-success: #10b981; /* Emerald 500 */
-  
-  --color-background: #0f172a; /* Slate 900 */
-  --color-surface: #1e293b; /* Slate 800 */
-  --color-surface-light: #334155; /* Slate 700 */
-  --color-surface-lighter: #475569; /* Slate 600 */
-  
-  --color-text-primary: #f8fafc; /* Slate 50 */
-  --color-text-secondary: #94a3b8; /* Slate 400 */
-  
+  --color-primary: #6366f1;
+  /* Indigo 500 */
+  --color-primary-dark: #4f46e5;
+  /* Indigo 600 */
+  --color-primary-light: #818cf8;
+  /* Indigo 400 */
+  --color-secondary: #ec4899;
+  /* Pink 500 */
+  --color-secondary-light: #f472b6;
+  /* Pink 400 */
+  --color-accent: #8b5cf6;
+  /* Violet 500 */
+  --color-accent-light: #a78bfa;
+  /* Violet 400 */
+  --color-success: #10b981;
+  /* Emerald 500 */
+
+  --color-background: #0f172a;
+  /* Slate 900 */
+  --color-surface: #1e293b;
+  /* Slate 800 */
+  --color-surface-light: #334155;
+  /* Slate 700 */
+  --color-surface-lighter: #475569;
+  /* Slate 600 */
+
+  --color-text-primary: #f8fafc;
+  /* Slate 50 */
+  --color-text-secondary: #94a3b8;
+  /* Slate 400 */
+
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.2), 0 8px 10px -6px rgb(0 0 0 / 0.1);
   --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.3);
   --shadow-glow-lg: 0 0 30px rgba(99, 102, 241, 0.4);
-  
+
   --radius-sm: 0.375rem;
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
   --radius-xl: 1rem;
   --radius-2xl: 1.5rem;
-  
+
   --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
@@ -47,6 +61,46 @@ body {
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
   overflow-x: hidden;
+  cursor: url('/magic-wand.png'), auto;
+  /* Custom cursor */
+}
+
+/* Hover Cursor Effect */
+button:hover,
+a:hover,
+.btn:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover,
+select:hover,
+.chip:hover,
+.card:hover {
+  cursor: url('/magic-wand-glow2.png'), pointer !important;
+}
+
+/* Magic Wand Click Effect */
+.magic-sparkle {
+  position: fixed;
+  pointer-events: none;
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(circle, #fff, transparent);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: sparkle-anim 0.5s ease-out forwards;
+  z-index: 9999;
+  box-shadow: 0 0 10px #fff, 0 0 20px #ff00de, 0 0 30px #ff00de;
+}
+
+@keyframes sparkle-anim {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(2);
+  }
 }
 
 #root {
@@ -57,7 +111,8 @@ body {
 
 /* Utility Classes */
 .container {
-  max-width: 600px; /* Mobile-first approach, limited width for app-like feel */
+  max-width: 600px;
+  /* Mobile-first approach, limited width for app-like feel */
   margin: 0 auto;
   padding: 1rem;
   width: 100%;
@@ -194,6 +249,7 @@ body {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -205,6 +261,7 @@ body {
     opacity: 0;
     transform: translateY(40px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -216,6 +273,7 @@ body {
     opacity: 0;
     transform: scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -223,9 +281,12 @@ body {
 }
 
 @keyframes pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.5;
   }
@@ -236,7 +297,9 @@ body {
 }
 
 /* Form Elements */
-input, select, textarea {
+input,
+select,
+textarea {
   background: var(--color-surface-light);
   border: 1px solid rgba(148, 163, 184, 0.2);
   color: var(--color-text-primary);
@@ -247,7 +310,9 @@ input, select, textarea {
   transition: all 0.3s ease;
 }
 
-input:focus, select:focus, textarea:focus {
+input:focus,
+select:focus,
+textarea:focus {
   outline: none;
   border-color: var(--color-primary);
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
@@ -298,7 +363,9 @@ input::placeholder {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Badge */
@@ -349,15 +416,15 @@ input::placeholder {
   .container {
     padding: 1rem 0.75rem;
   }
-  
+
   .card {
     padding: 1.25rem 1rem;
   }
-  
+
   h1 {
     font-size: 1.5rem;
   }
-  
+
   h2 {
     font-size: 1.5rem;
   }

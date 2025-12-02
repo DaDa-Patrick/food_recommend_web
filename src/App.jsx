@@ -9,6 +9,27 @@ import Favorites from './pages/Favorites';
 import History from './pages/History';
 
 function App() {
+  React.useEffect(() => {
+    const handleClick = (e) => {
+      const sparkle = document.createElement('div');
+      sparkle.className = 'magic-sparkle';
+      sparkle.style.left = `${e.clientX}px`;
+      sparkle.style.top = `${e.clientY}px`;
+      document.body.appendChild(sparkle);
+
+      // Remove the element after animation completes
+      setTimeout(() => {
+        sparkle.remove();
+      }, 500);
+    };
+
+    window.addEventListener('click', handleClick);
+
+    return () => {
+      window.removeEventListener('click', handleClick);
+    };
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
