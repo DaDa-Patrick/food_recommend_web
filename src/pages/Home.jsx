@@ -27,15 +27,20 @@ const Home = () => {
             }}>
                 <div style={{
                     position: 'absolute',
-                    width: '200px',
-                    height: '200px',
-                    borderRadius: '50%',
-                    border: '2px solid rgba(99, 102, 241, 0.2)',
                     top: '50%',
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
-                    animation: 'spin 20s linear infinite'
-                }}></div>
+                    width: '200px',
+                    height: '200px',
+                }}>
+                    <div style={{
+                        width: '100%',
+                        height: '100%',
+                        borderRadius: '50%',
+                        border: '2px solid rgba(99, 102, 241, 0.2)',
+                        animation: 'spin 20s linear infinite'
+                    }}></div>
+                </div>
                 <UtensilsCrossed size={80} className="text-gradient" style={{ position: 'relative', zIndex: 1 }} />
             </div>
 
