@@ -2,41 +2,53 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { locations, prices, types } from '../utils/mockData';
 import { storage } from '../utils/storage';
-import { ChevronRight, Check } from 'lucide-react';
+import { ChevronRight, Check, CheckCheck } from 'lucide-react';
 
 const Preferences = () => {
     const navigate = useNavigate();
     const [selectedTypes, setSelectedTypes] = useState([]);
-    const [selectedPrice, setSelectedPrice] = useState('');
-    const [selectedLocation, setSelectedLocation] = useState('');
+    const [selectedPrices, setSelectedPrices] = useState([]);
+    const [selectedLocations, setSelectedLocations] = useState([]);
 
     useEffect(() => {
         // Load saved preferences if any
         const saved = storage.getPreferences();
         if (saved) {
             setSelectedTypes(saved.types || []);
-            setSelectedPrice(saved.price || '');
-            setSelectedLocation(saved.location || '');
+            // Handle backward compatibility (old format was single value)
+            setSelectedPrices(Array.isArray(saved.prices) ? saved.prices : (saved.price ? [saved.price] : []));
+            setSelectedLocations(Array.isArray(saved.locations) ? saved.locations : (saved.location ? [saved.location] : []));
         }
     }, []);
 
-    const toggleType = (id) => {
-        setSelectedTypes(prev =>
+    const toggleItem = (list, setList, id) => {
+        setList(prev =>
             prev.includes(id) ? prev.filter(t => t !== id) : [...prev, id]
         );
     };
 
+    const toggleAll = (list, setList, allItems) => {
+        const allIds = allItems.map(item => item.id);
+        if (list.length === allIds.length) {
+            // All selected, so deselect all
+            setList([]);
+        } else {
+            // Select all
+            setList(allIds);
+        }
+    };
+
     const handleStart = () => {
-        if (selectedTypes.length === 0 || !selectedPrice || !selectedLocation) {
-            alert('請選擇所有條件！'); // Simple alert for now, can be improved
+        if (selectedTypes.length === 0 || selectedPrices.length === 0 || selectedLocations.length === 0) {
+            alert('請在每個類別中至少選擇一項！');
             return;
         }
 
         // Save preferences
         storage.setPreferences({
             types: selectedTypes,
-            price: selectedPrice,
-            location: selectedLocation
+            prices: selectedPrices,
+            locations: selectedLocations
         });
 
         // Navigate to result with state
@@ -44,14 +56,14 @@ const Preferences = () => {
             state: {
                 criteria: {
                     types: selectedTypes,
-                    price: selectedPrice,
-                    location: selectedLocation
+                    prices: selectedPrices,
+                    locations: selectedLocations
                 }
             }
         });
     };
 
-    const SelectionSection = ({ title, children, completed }) => (
+    const SelectionSection = ({ title, children, completed, onSelectAll, isAllSelected }) => (
         <div style={{
             marginBottom: '2.5rem',
             padding: '1.5rem',
@@ -73,6 +85,27 @@ const Preferences = () => {
                 {completed && <Check size={20} color="#818cf8" />}
             </div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
+                {/* Select All Button */}
+                <button
+                    onClick={onSelectAll}
+                    style={{
+                        padding: '0.6rem 1.2rem',
+                        borderRadius: '2rem',
+                        border: isAllSelected ? '2px solid #10b981' : '2px dashed rgba(148, 163, 184, 0.4)',
+                        background: isAllSelected ? 'rgba(16, 185, 129, 0.15)' : 'transparent',
+                        color: isAllSelected ? '#10b981' : 'var(--color-text-secondary)',
+                        fontWeight: '600',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease',
+                        fontSize: '0.9rem',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '0.4rem'
+                    }}
+                >
+                    <CheckCheck size={16} />
+                    全選
+                </button>
                 {children}
             </div>
         </div>
@@ -110,7 +143,7 @@ const Preferences = () => {
         </button>
     );
 
-    const isComplete = selectedTypes.length > 0 && selectedPrice && selectedLocation;
+    const isComplete = selectedTypes.length > 0 && selectedPrices.length > 0 && selectedLocations.length > 0;
 
     return (
         <div className="container fade-in" style={{ paddingBottom: '120px' }}>
@@ -131,35 +164,50 @@ const Preferences = () => {
                 </p>
             </div>
 
-            <SelectionSection title="1. 飲食偏好 (可多選)" completed={selectedTypes.length > 0}>
+            <SelectionSection
+                title="1. 飲食偏好 (可多選)"
+                completed={selectedTypes.length > 0}
+                onSelectAll={() => toggleAll(selectedTypes, setSelectedTypes, types)}
+                isAllSelected={selectedTypes.length === types.length}
+            >
                 {types.map(t => (
                     <Chip
                         key={t.id}
                         label={t.name}
                         selected={selectedTypes.includes(t.id)}
-                        onClick={() => toggleType(t.id)}
+                        onClick={() => toggleItem(selectedTypes, setSelectedTypes, t.id)}
                     />
                 ))}
             </SelectionSection>
 
-            <SelectionSection title="2. 價位範圍" completed={!!selectedPrice}>
+            <SelectionSection
+                title="2. 價位範圍 (可多選)"
+                completed={selectedPrices.length > 0}
+                onSelectAll={() => toggleAll(selectedPrices, setSelectedPrices, prices)}
+                isAllSelected={selectedPrices.length === prices.length}
+            >
                 {prices.map(p => (
                     <Chip
                         key={p.id}
                         label={p.name}
-                        selected={selectedPrice === p.id}
-                        onClick={() => setSelectedPrice(p.id)}
+                        selected={selectedPrices.includes(p.id)}
+                        onClick={() => toggleItem(selectedPrices, setSelectedPrices, p.id)}
                     />
                 ))}
             </SelectionSection>
 
-            <SelectionSection title="3. 地區" completed={!!selectedLocation}>
+            <SelectionSection
+                title="3. 地區 (可多選)"
+                completed={selectedLocations.length > 0}
+                onSelectAll={() => toggleAll(selectedLocations, setSelectedLocations, locations)}
+                isAllSelected={selectedLocations.length === locations.length}
+            >
                 {locations.map(l => (
                     <Chip
                         key={l.id}
                         label={l.name}
-                        selected={selectedLocation === l.id}
-                        onClick={() => setSelectedLocation(l.id)}
+                        selected={selectedLocations.includes(l.id)}
+                        onClick={() => toggleItem(selectedLocations, setSelectedLocations, l.id)}
                     />
                 ))}
             </SelectionSection>
