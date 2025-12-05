@@ -31,15 +31,15 @@ function App() {
 
   return (
     <Router>
-      <Layout>
-        <Routes>
+      <Routes>
+        <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/preferences" element={<Preferences />} />
           <Route path="/result" element={<Result />} />
           <Route path="/history" element={<History />} />
           <Route path="/favorites" element={<Favorites />} />
-        </Routes>
-      </Layout>
+        </Route>
+      </Routes>
     </Router>
   );
 }
